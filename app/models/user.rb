@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :reports, dependent: :destroy
   has_many :comments, dependent: :destroy
 
+  validates :uid, uniqueness: { scope: :provider }
+
   has_one_attached :avatar do |attachable|
     attachable.variant :thumb, resize_to_limit: [150, 150]
   end
