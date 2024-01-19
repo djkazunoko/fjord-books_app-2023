@@ -22,4 +22,14 @@ RSpec.describe Report, type: :model do
       expect(report.editable?(other_user)).to eq false
     end
   end
+
+  describe '#created_on' do
+    it 'returns the created date' do
+      report = FactoryBot.build(:report)
+
+      report.created_at = Time.zone.parse('2024/1/19')
+
+      expect(report.created_on).to eq Date.new(2024, 1, 19)
+    end
+  end
 end
