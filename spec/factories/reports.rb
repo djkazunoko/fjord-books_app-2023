@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :report do
-    title { 'report' }
-    content { 'A test report.' }
+    sequence(:title) { |n| "report#{n}" }
+    sequence(:content) { |n| "A test report#{n}." }
     association :user
   end
 end
