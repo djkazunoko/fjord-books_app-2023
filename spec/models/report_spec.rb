@@ -49,10 +49,10 @@ RSpec.describe Report, type: :model do
       end
 
       it 'can not mention its own report' do
-        report.content = "http://localhost:3000/reports/#{report.id}"
-        report.save
+        mentioning_report.content = "http://localhost:3000/reports/#{mentioning_report.id}"
+        mentioning_report.save
 
-        expect(report.mentioned_reports).to_not include report
+        expect(mentioning_report.mentioning_reports).to_not include mentioning_report
       end
     end
 
