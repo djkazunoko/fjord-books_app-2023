@@ -5,11 +5,11 @@ require 'rails_helper'
 RSpec.describe 'Reports', type: :system do
   include LoginSupport
 
-  let(:user) { FactoryBot.create(:user) }
-  let!(:report) { FactoryBot.create(:report, user: user) }
+  let(:alice) { FactoryBot.create(:user) }
+  let!(:alice_report) { FactoryBot.create(:report, user: alice) }
 
-  scenario 'user creates a new report' do
-    sign_in_as user
+  scenario 'alice creates a new report' do
+    sign_in_as alice
 
     expect {
       click_link '日報'
@@ -20,12 +20,12 @@ RSpec.describe 'Reports', type: :system do
 
       expect(page).to have_content '日報が作成されました。'
       expect(page).to have_content 'テスト日報'
-      expect(page).to have_content "作成者: #{user.email}"
-    }.to change(user.reports, :count).by(1)
+      expect(page).to have_content "作成者: #{alice.email}"
+    }.to change(alice.reports, :count).by(1)
   end
 
-  scenario 'user edits a report' do
-    sign_in_as user
+  scenario 'alice edits a report' do
+    sign_in_as alice
 
     click_link '日報'
 
@@ -41,8 +41,8 @@ RSpec.describe 'Reports', type: :system do
     expect(page).to have_content '内容: 書き換えました。'
   end
 
-  scenario 'user deletes a report' do
-    sign_in_as user
+  scenario 'alice deletes a report' do
+    sign_in_as alice
 
     click_link '日報'
 
@@ -51,6 +51,6 @@ RSpec.describe 'Reports', type: :system do
     expect {
       click_button 'この日報を削除'
       expect(page).to have_content '日報が削除されました。'
-    }.to change(user.reports, :count).by(-1)
+    }.to change(alice.reports, :count).by(-1)
   end
 end
