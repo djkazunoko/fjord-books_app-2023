@@ -3,15 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Reports', type: :system do
+  include LoginSupport
+
   scenario 'user creates a new report' do
     user = FactoryBot.create(:user)
 
-    visit root_path
-    fill_in 'Eメール', with: user.email
-    fill_in 'パスワード', with: user.password
-    click_button 'ログイン'
-
-    expect(page).to have_content 'ログインしました。'
+    sign_in_as user
 
     expect {
       click_link '日報'
@@ -30,12 +27,7 @@ RSpec.describe 'Reports', type: :system do
     report = FactoryBot.create(:report)
     user = report.user
 
-    visit root_path
-    fill_in 'Eメール', with: user.email
-    fill_in 'パスワード', with: user.password
-    click_button 'ログイン'
-
-    expect(page).to have_content 'ログインしました。'
+    sign_in_as user
 
     click_link '日報'
 
@@ -55,12 +47,7 @@ RSpec.describe 'Reports', type: :system do
     report = FactoryBot.create(:report)
     user = report.user
 
-    visit root_path
-    fill_in 'Eメール', with: user.email
-    fill_in 'パスワード', with: user.password
-    click_button 'ログイン'
-
-    expect(page).to have_content 'ログインしました。'
+    sign_in_as user
 
     click_link '日報'
 
