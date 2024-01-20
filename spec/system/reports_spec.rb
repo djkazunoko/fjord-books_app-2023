@@ -25,4 +25,30 @@ RSpec.describe 'Reports', type: :system do
       expect(page).to have_content "作成者: #{user.email}"
     }.to change(user.reports, :count).by(1)
   end
+
+  scenario 'user edits a report' do
+    report = FactoryBot.create(:report)
+    user = report.user
+
+    visit root_path
+    fill_in 'Eメール', with: user.email
+    fill_in 'パスワード', with: user.password
+    click_button 'ログイン'
+
+    expect(page).to have_content 'ログインしました。'
+
+    click_link '日報'
+
+    click_link 'この日報を表示'
+    expect(page).to have_content 'A test report1.'
+
+    click_link 'この日報を編集'
+    fill_in 'タイトル', with: '日報1'
+    fill_in '内容', with: '書き換えました。'
+    click_button '更新する'
+
+    expect(page).to have_content '日報が更新されました。'
+    expect(page).to have_content 'タイトル: 日報1'
+    expect(page).to have_content '内容: 書き換えました。'
+  end
 end
