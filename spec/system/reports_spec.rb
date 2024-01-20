@@ -5,9 +5,10 @@ require 'rails_helper'
 RSpec.describe 'Reports', type: :system do
   include LoginSupport
 
-  scenario 'user creates a new report' do
-    user = FactoryBot.create(:user)
+  let(:user) { FactoryBot.create(:user) }
+  let!(:report) { FactoryBot.create(:report, user: user) }
 
+  scenario 'user creates a new report' do
     sign_in_as user
 
     expect {
@@ -24,9 +25,6 @@ RSpec.describe 'Reports', type: :system do
   end
 
   scenario 'user edits a report' do
-    report = FactoryBot.create(:report)
-    user = report.user
-
     sign_in_as user
 
     click_link '日報'
@@ -44,9 +42,6 @@ RSpec.describe 'Reports', type: :system do
   end
 
   scenario 'user deletes a report' do
-    report = FactoryBot.create(:report)
-    user = report.user
-
     sign_in_as user
 
     click_link '日報'
