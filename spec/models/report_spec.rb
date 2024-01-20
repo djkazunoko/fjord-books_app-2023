@@ -3,22 +3,23 @@
 require 'rails_helper'
 
 RSpec.describe Report, type: :model do
-  let(:owner) { FactoryBot.create(:user) }
-  let(:other_user) { FactoryBot.create(:user) }
-  let(:report) { FactoryBot.create(:report, user: owner) }
-  let(:mentioning_report) { FactoryBot.create(:report, content: "http://localhost:3000/reports/#{report.id}") }
+  let(:report) { FactoryBot.create(:report) }
 
   it 'has a valid factory' do
     expect(report).to be_valid
   end
 
   describe '#editable?' do
+    let(:alice) { FactoryBot.create(:user) }
+    let(:other_user) { FactoryBot.create(:user) }
+    let(:alice_report) { FactoryBot.create(:report, user: alice) }
+
     it 'is editable by the owner' do
-      expect(report.editable?(owner)).to eq true
+      expect(alice_report.editable?(alice)).to eq true
     end
 
     it 'is not editable by the other user' do
-      expect(report.editable?(other_user)).to eq false
+      expect(alice_report.editable?(other_user)).to eq false
     end
   end
 
@@ -31,6 +32,8 @@ RSpec.describe Report, type: :model do
   end
 
   describe '#save_mentions' do
+    let(:mentioning_report) { FactoryBot.create(:report, content: "http://localhost:3000/reports/#{report.id}") }
+
     context 'when the mentioning report is created' do
       it 'can mention other reports' do
         expect(report.mentioned_reports).to include mentioning_report
