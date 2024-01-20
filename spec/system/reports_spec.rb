@@ -11,7 +11,7 @@ RSpec.describe 'Reports', type: :system do
   scenario 'alice creates a new report' do
     sign_in_as alice
 
-    expect {
+    expect do
       click_link '日報'
       click_link '日報の新規作成'
       fill_in 'タイトル', with: 'テスト日報'
@@ -21,7 +21,7 @@ RSpec.describe 'Reports', type: :system do
       expect(page).to have_content '日報が作成されました。'
       expect(page).to have_content 'テスト日報'
       expect(page).to have_content "作成者: #{alice.email}"
-    }.to change(alice.reports, :count).by(1)
+    end.to change(alice.reports, :count).by(1)
   end
 
   scenario 'alice edits a report' do
@@ -48,9 +48,9 @@ RSpec.describe 'Reports', type: :system do
 
     click_link 'この日報を表示'
 
-    expect {
+    expect do
       click_button 'この日報を削除'
       expect(page).to have_content '日報が削除されました。'
-    }.to change(alice.reports, :count).by(-1)
+    end.to change(alice.reports, :count).by(-1)
   end
 end
