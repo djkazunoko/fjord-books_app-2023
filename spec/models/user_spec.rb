@@ -3,20 +3,20 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let(:user) { FactoryBot.create(:user) }
+
   it 'has a valid factory' do
-    expect(FactoryBot.build(:user)).to be_valid
+    expect(user).to be_valid
   end
 
   describe '#name_or_email' do
     it 'returns name when name is present' do
-      user = FactoryBot.build(:user, name: 'alice')
+      user.name = 'alice'
 
       expect(user.name_or_email).to eq 'alice'
     end
 
     it 'returns email when name is not present' do
-      user = FactoryBot.build(:user)
-
       expect(user.name_or_email).to include '@example.com'
     end
   end
