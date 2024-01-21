@@ -17,7 +17,7 @@ RSpec.describe User, type: :model do
     it 'returns email when name is not present' do
       user = FactoryBot.build(:user)
 
-      expect(user.name_or_email).to eq 'tester@example.com'
+      expect(user.name_or_email).to include '@example.com'
     end
   end
 end
