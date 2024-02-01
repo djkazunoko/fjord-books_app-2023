@@ -18,6 +18,7 @@ RSpec.describe 'Reports', type: :system do
       fill_in '内容', with: '日報を作成'
       click_button '登録する'
 
+      expect(page).to have_current_path(report_path(alice.reports.last))
       expect(page).to have_content '日報が作成されました。'
       expect(page).to have_content 'テスト日報'
       expect(page).to have_content "作成者: #{alice.email}"
