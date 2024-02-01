@@ -43,14 +43,14 @@ RSpec.describe Report, type: :model do
     context 'when the mentioning report is updated' do
       it 'updates mentions to other reports' do
         mentioning_report.content = 'no mention'
-        mentioning_report.save
+        mentioning_report.save!
 
         expect(report.mentioned_reports).to_not include mentioning_report
       end
 
       it 'can not mention its own report' do
         mentioning_report.content = "http://localhost:3000/reports/#{mentioning_report.id}"
-        mentioning_report.save
+        mentioning_report.save!
 
         expect(mentioning_report.mentioning_reports).to_not include mentioning_report
       end
